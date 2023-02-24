@@ -1,0 +1,23 @@
+C:\Users\Максим\source\repos\Diary WPF\Diary WPF\obj\Debug\net6.0-windows\Diary WPF.csproj.AssemblyReference.cache
+C:\Users\Максим\source\repos\Diary WPF\Diary WPF\obj\Debug\net6.0-windows\MainWindow.g.cs
+C:\Users\Максим\source\repos\Diary WPF\Diary WPF\obj\Debug\net6.0-windows\App.g.cs
+C:\Users\Максим\source\repos\Diary WPF\Diary WPF\obj\Debug\net6.0-windows\Diary WPF_MarkupCompile.cache
+C:\Users\Максим\source\repos\Diary WPF\Diary WPF\obj\Debug\net6.0-windows\Diary WPF_MarkupCompile.lref
+C:\Users\Максим\source\repos\Diary WPF\Diary WPF\bin\Debug\net6.0-windows\Diary WPF.exe
+C:\Users\Максим\source\repos\Diary WPF\Diary WPF\bin\Debug\net6.0-windows\Diary WPF.deps.json
+C:\Users\Максим\source\repos\Diary WPF\Diary WPF\bin\Debug\net6.0-windows\Diary WPF.runtimeconfig.json
+C:\Users\Максим\source\repos\Diary WPF\Diary WPF\bin\Debug\net6.0-windows\Diary WPF.dll
+C:\Users\Максим\source\repos\Diary WPF\Diary WPF\bin\Debug\net6.0-windows\Diary WPF.pdb
+C:\Users\Максим\source\repos\Diary WPF\Diary WPF\obj\Debug\net6.0-windows\MainWindow.baml
+C:\Users\Максим\source\repos\Diary WPF\Diary WPF\obj\Debug\net6.0-windows\Diary WPF.g.resources
+C:\Users\Максим\source\repos\Diary WPF\Diary WPF\obj\Debug\net6.0-windows\Diary WPF.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Максим\source\repos\Diary WPF\Diary WPF\obj\Debug\net6.0-windows\Diary WPF.AssemblyInfoInputs.cache
+C:\Users\Максим\source\repos\Diary WPF\Diary WPF\obj\Debug\net6.0-windows\Diary WPF.AssemblyInfo.cs
+C:\Users\Максим\source\repos\Diary WPF\Diary WPF\obj\Debug\net6.0-windows\Diary WPF.csproj.CoreCompileInputs.cache
+C:\Users\Максим\source\repos\Diary WPF\Diary WPF\obj\Debug\net6.0-windows\Diary WPF.dll
+C:\Users\Максим\source\repos\Diary WPF\Diary WPF\obj\Debug\net6.0-windows\refint\Diary WPF.dll
+C:\Users\Максим\source\repos\Diary WPF\Diary WPF\obj\Debug\net6.0-windows\Diary WPF.pdb
+C:\Users\Максим\source\repos\Diary WPF\Diary WPF\obj\Debug\net6.0-windows\Diary WPF.genruntimeconfig.cache
+C:\Users\Максим\source\repos\Diary WPF\Diary WPF\obj\Debug\net6.0-windows\ref\Diary WPF.dll
+C:\Users\Максим\source\repos\Diary WPF\Diary WPF\bin\Debug\net6.0-windows\Newtonsoft.Json.dll
+C:\Users\Максим\source\repos\Diary WPF\Diary WPF\obj\Debug\net6.0-windows\Diary WPF.csproj.CopyComplete
