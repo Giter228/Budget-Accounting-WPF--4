@@ -1,17 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Diary_WPF
 {
@@ -20,143 +10,180 @@ namespace Diary_WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static string way = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-        public static Note example = new Note("Example name", "Example description", selectedDate);
+        public List<string> types = new List<string>();
+        private static string way = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\Budget";
 
-        public static List<Note> notes = De_Serialize_.Deserialize<Note>(way + "\\notes", example);
-        public static DateTime selectedDate = DateTime.Today;
+        List<budgetInput> budgetOutputs = De_Serialize_.Deserialize<budgetInput>(way);
+        List<budgetInput> budgetsNow = new List<budgetInput>();
 
+        DateTime selectedDate = DateTime.Today;
+
+        private string nameCheck;
+        private string typeCheck;
+        private string balanceCheck;
+        
         public MainWindow()
         {
             InitializeComponent();
-            DatePick.SelectedDate = DateTime.Today;
             
-            CheckLBX();
-        }
-        private void NotesLBX_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            NoteName.Text = NotesLBX.SelectedItem.ToString();
-            foreach (var _ in notes)
-            {
-                if (NoteName.Text == _.Name)
-                {
-                    NoteDesc.Text = _.Description;
-                }
-            }
-            CheckLBX();
+            DatePick.SelectedDate = selectedDate;
+            Fill_DataGrid();
         }
 
-        private void Create_Click(object sender, RoutedEventArgs e)
+        private void AddNote_BTN_Click(object sender, RoutedEventArgs e)
         {
-            if (NoteName.Text == "" || NoteDesc.Text == "")
+            if (Input_NoteName_Box.Text == "" || ComboBox.SelectedItem == null || Input_Money_Box.Text == "")
             {
-                MessageBox.Show("Ошибка. Поля не заполнены");
+                MessageBox.Show("Не все поля выбраны и/или заполнены.");
                 return;
             }
-            if (NotesLBX.Items.Contains(NoteName.Text))
+
+            double sum;
+            if (double.TryParse(Input_Money_Box.Text, out sum))
             {
-                MessageBox.Show("Заметка с данным названием уже существует. Если вы хотите её отредактировать, измените данные в полях, нажав на «Сохранить»");
-                return;
+                budgetOutputs.Add(new budgetInput(Input_NoteName_Box.Text, ComboBox.SelectedValue.ToString(), Convert.ToInt32(Input_Money_Box.Text), Convert.ToDateTime(DatePick.Text)));
+
+                Fill_DataGrid();
+
+                Input_NoteName_Box.Text = null;
+                ComboBox.Text = null;
+                Input_Money_Box.Text = null;
+
+                De_Serialize_.Serialize(budgetOutputs, way + "\\Budgets.json");
             }
-            
-            Note note = new Note(NoteName.Text, NoteDesc.Text, (DateTime)DatePick.SelectedDate);
-            notes.Add(note);
-
-            foreach (var _ in notes)
-            {
-                if (DatePick.SelectedDate == _.Date)
-                {
-                    if (NotesLBX.Items.Contains(_.Name)) { }
-                    else NotesLBX.Items.Add(_.Name);
-                }
-            }
-            NotesLBX.SelectedIndex = notes.Count - 1;
-
-            De_Serialize_.Serialize(notes, way + "\\notes\\allNotes.json");
-            
-            NoteName.Text = null;
-            NoteDesc.Text = null;
-
-            CheckLBX();
+            else MessageBox.Show("Ошибка! В поле суммы введите число.");
         }
 
-        private void CheckLBX()
+        private void Fill_DataGrid()
         {
-            if (NotesLBX.Items.Count == 0 || NotesLBX.SelectedItem == null)
+            int result = 0;
+            budgetsNow.Clear();
+            foreach (var item in budgetOutputs)
             {
-                DeleteBTN.IsEnabled = false;
-                SaveBTN.IsEnabled = false;
+                if (item.Date == selectedDate)
+                {
+                    budgetsNow.Add(item);
+                    result += item.Balance;
+                }
+
+                if (!types.Contains(item.TypeNote))
+                {
+                    types.Add(item.TypeNote);
+                }
             }
-            else
+            ComboBox.ItemsSource = null;
+            ComboBox.ItemsSource = types;
+            
+            DataGrid.ItemsSource = null;
+            DataGrid.ItemsSource = budgetsNow;
+
+            Result.Text = $"Итог: {result}";
+        }
+
+        private void Create_NewTypeNote_BTN_Click(object sender, RoutedEventArgs e)
+        {
+            AddNewTypeNoteWindow window = new AddNewTypeNoteWindow();
+            window.ShowDialog();
+
+            if (window.type != null)
             {
-                DeleteBTN.IsEnabled = true;
-                SaveBTN.IsEnabled = true;
+                if (window.type.Trim() != null && window.type.Trim() != "")
+                {
+                    ComboBox.ItemsSource = null;
+                    types.Add(window.type.Trim());
+
+                    ComboBox.ItemsSource = types;
+                    ComboBox.SelectedValue = window.type;
+                }
             }
         }
 
         private void DatePick_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             selectedDate = Convert.ToDateTime(DatePick.Text);
-            
-            LBX_ItemsCheck();
+
+            Input_NoteName_Box.Text = null;
+            Input_Money_Box.Text = null;
+
+            Fill_DataGrid();
         }
 
-        private void LBX_ItemsCheck()
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            NotesLBX.Items.Clear();
+            budgetInput selected = DataGrid.SelectedItem as budgetInput;
 
-            foreach (var _ in notes)
+            if (selected != null)
             {
-                if (_.Date == selectedDate)
-                {
-                    NotesLBX.Items.Add(_.Name);
-                }
+                Input_NoteName_Box.Text = selected.Name;
+                ComboBox.SelectedValue = selected.TypeNote;
+                Input_Money_Box.Text = selected.Balance.ToString();
+                
+                nameCheck = Input_NoteName_Box.Text;
+                typeCheck = ComboBox.SelectedValue.ToString();
+                balanceCheck = Input_Money_Box.Text;
             }
         }
-        private void SaveBTN_Click(object sender, RoutedEventArgs e)
+
+        private void EditNote_Btn_Click(object sender, RoutedEventArgs e)
         {
-            if (NoteName.Text == "" || NoteDesc.Text == "")
+            CheckSelectedItem();
+
+            if (nameCheck == Input_NoteName_Box.Text && typeCheck == ComboBox.SelectedValue.ToString() && balanceCheck == Input_Money_Box.Text)
             {
-                MessageBox.Show("Ошибка. Поля не заполнены");
+                MessageBox.Show("Изменения не найдены");
                 return;
             }
 
-            string selectedNote = NotesLBX.SelectedItem.ToString();
-            foreach (var _ in notes)
-            {
-                if (_.Name == selectedNote)
-                {
-                    _.Name = NoteName.Text;
-                    _.Description = NoteDesc.Text;
-                }
-            }
-            De_Serialize_.Serialize(notes, way + "\\notes\\allNotes.json");
-            
-            NoteName.Text = null;
-            NoteDesc.Text = null;
-            
-            LBX_ItemsCheck();
-            CheckLBX();
-        }
-        private void DeleteBTN_Click(object sender, RoutedEventArgs e)
-        {
             int index = 0;
-            foreach (var _ in notes)
+            foreach (var item in budgetOutputs)
             {
-                if (_.Name == NotesLBX.SelectedItem.ToString())
+                if (nameCheck == item.Name && typeCheck == item.TypeNote && balanceCheck == item.Balance.ToString())
                 {
-                    index = notes.IndexOf(_);
+                    budgetOutputs[index] = new budgetInput(Input_NoteName_Box.Text, ComboBox.SelectedValue.ToString(), Convert.ToInt32(Input_Money_Box.Text), Convert.ToDateTime(DatePick.Text));
+
+                    Fill_DataGrid();
+
+                    Input_NoteName_Box.Text = null;
+                    ComboBox.Text = null;
+                    Input_Money_Box.Text = null;
+
+                    De_Serialize_.Serialize(budgetOutputs, way + "\\Budgets.json");
+                    return;
                 }
+                index++;
             }
-            NotesLBX.SelectedIndex = notes.Count - 1;
-            notes.RemoveAt(index);
-            De_Serialize_.Serialize(notes, way + "\\notes\\allNotes.json");
-
-            NoteName.Text = null;
-            NoteDesc.Text = null;
-
-            LBX_ItemsCheck();
-            CheckLBX();
         }
+        private void Delete_BTN_Click(object sender, RoutedEventArgs e)
+        {
+            CheckSelectedItem();
+
+            int index = 0;
+            foreach (var item in budgetOutputs)
+            {
+                if (nameCheck == item.Name && typeCheck == item.TypeNote && balanceCheck == item.Balance.ToString())
+                {
+                    budgetOutputs.RemoveAt(index);
+
+                    Fill_DataGrid();
+
+                    Input_NoteName_Box.Text = null;
+                    ComboBox.Text = null;
+                    Input_Money_Box.Text = null;
+
+                    De_Serialize_.Serialize(budgetOutputs, way + "\\Budgets.json");
+                    return;
+                }
+                index++;
+            }
+        }
+        private void CheckSelectedItem()
+        {
+            if (DataGrid.SelectedItem == null)
+            {
+                MessageBox.Show("Вы не выбрали пункта для изменения");
+                return;
+            }
+        }
+
     }
 }

@@ -21,3 +21,9 @@ C:\Users\Максим\source\repos\Diary WPF\Diary WPF\obj\Debug\net6.0-windows\
 C:\Users\Максим\source\repos\Diary WPF\Diary WPF\obj\Debug\net6.0-windows\ref\Diary WPF.dll
 C:\Users\Максим\source\repos\Diary WPF\Diary WPF\bin\Debug\net6.0-windows\Newtonsoft.Json.dll
 C:\Users\Максим\source\repos\Diary WPF\Diary WPF\obj\Debug\net6.0-windows\Diary WPF.csproj.CopyComplete
+C:\Users\Максим\source\repos\Diary WPF\Diary WPF\bin\Debug\net6.0-windows\MaterialDesignColors.dll
+C:\Users\Максим\source\repos\Diary WPF\Diary WPF\bin\Debug\net6.0-windows\MaterialDesignThemes.Wpf.dll
+C:\Users\Максим\source\repos\Diary WPF\Diary WPF\bin\Debug\net6.0-windows\Microsoft.Xaml.Behaviors.dll
+C:\Users\Максим\source\repos\Diary WPF\Diary WPF\obj\Debug\net6.0-windows\App.baml
+C:\Users\Максим\source\repos\Diary WPF\Diary WPF\obj\Debug\net6.0-windows\AddNewTypeNoteWindow.g.cs
+C:\Users\Максим\source\repos\Diary WPF\Diary WPF\obj\Debug\net6.0-windows\AddNewTypeNoteWindow.baml

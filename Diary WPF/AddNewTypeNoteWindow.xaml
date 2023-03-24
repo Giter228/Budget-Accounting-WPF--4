@@ -1,0 +1,26 @@
+﻿<Window x:Class="Diary_WPF.AddNewTypeNoteWindow"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Diary_WPF"
+        mc:Ignorable="d"
+        Icon="https://cdn-icons-png.flaticon.com/512/1828/1828817.png"
+        Title="Добавление типа" Height="120" Width="336" MinHeight="120" MinWidth="336" MaxHeight="200" MaxWidth="480">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+            <TextBlock HorizontalAlignment="Center" Text="Введите тип добавляемой записи: " Margin="0,10,0,0"/>
+            <TextBox x:Name="NewTypeText" Margin="10,5,10,0"/>
+            <Button x:Name="Finish_BTN" Margin="10" Height="25" Content="Добавить новый тип" Click="Finish_BTN_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

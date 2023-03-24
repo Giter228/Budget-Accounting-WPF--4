@@ -1,11 +1,6 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace Diary_WPF
 {
@@ -16,23 +11,21 @@ namespace Diary_WPF
             string json = JsonConvert.SerializeObject(notes);
             File.WriteAllText(way, json);
         }
-        public static List<T> Deserialize<T>(string way, T example)
+        public static List<T> Deserialize<T>(string way)
         {
             List<T> list = new List<T>();
 
             Directory.CreateDirectory(way);
+            way += "\\Budgets.json";
 
-            if (!File.Exists(way + "\\allNotes.json"))
+            if (!File.Exists(way))
             {
-                way += "\\allNotes.json";
                 File.Create(way);
             }
-            else way += "\\allNotes.json";
 
             string json = File.ReadAllText(way);
             if (json is "" or null)
             {
-                list.Add(example);
                 Serialize(list, way);
                 return list;
             }
